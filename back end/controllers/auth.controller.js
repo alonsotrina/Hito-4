@@ -19,17 +19,17 @@ const login = async (req, res) => {
     if (password.length < 6) {
       return res
         .status(400)
-        .json({ error: "Password must be at least 6 characters" });
+        .json({ error: "Password must be at least 6 characters jajaja" });
     }
 
     const user = await authModel.getUserByEmail(email);
 
     if (!user) {
-      return res.status(400).json({ error: "User not found" });
+      return res.status(400).json({ error: "El email no se encuentra registrado" });
     }
 
     if (user.password !== password) {
-      return res.status(400).json({ error: "Invalid password" });
+      return res.status(400).json({ error: "La contraseña ingresada es incorrecta" });
     }
 
     const payload = { email, id: user.id };
@@ -62,7 +62,7 @@ const register = async (req, res) => {
 
     const user = await authModel.getUserByEmail(email);
     if (user) {
-      return res.status(400).json({ error: "User already exists" });
+      return res.status(400).json({ error: "El usuario ya existe" });
     }
     const newUser = { email, password, id: nanoid() };
     await authModel.addUser(newUser);
